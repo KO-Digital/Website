@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KO-Digital — Koperasi Pendidik Digital Malaysia Berhad</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #EBBB1D;
+    --gold-light: #F5D88A;
+    --gold-dark: #C9920A;
+    --gold-pale: #FDF6E3;
+    --gold-muted: #F7E8B0;
+    --white: #FFFFFF;
+    --off-white: #FAFAF8;
+    --black: #0E0E0E;
+    --ink: #1A1A1A;
+    --ink-muted: #3A3A3A;
+    --ink-light: #6B6B6B;
+    --ink-faint: #9A9A9A;
+    --border: rgba(14,14,14,0.09);
+    --border-gold: rgba(235,187,29,0.35);
+    --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-sm: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.09);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.10);
+    --shadow-gold: 0 8px 32px rgba(235,187,29,0.25);
+    --r-sm: 6px;
+    --r-md: 12px;
+    --r-lg: 18px;
+    --r-xl: 24px;
+    --spring: cubic-bezier(0.34,1.56,0.64,1);
+    --ease: cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── DECORATIVE BG ── */
+  .bg-pattern {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 85% 10%, rgba(235,187,29,0.07) 0%, transparent 45%),
+      radial-gradient(circle at 10% 85%, rgba(235,187,29,0.05) 0%, transparent 40%);
+  }
+  .bg-dots {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(circle, rgba(235,187,29,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, transparent 75%);
+  }
+
+  /* ── ANNOUNCEMENT ── */
+  .announcement {
+    position: relative; z-index: 100;
+    background: var(--ink);
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+  }
+  .announcement strong { color: var(--gold); font-weight: 700; }
+  .announcement a {
+    color: var(--gold);
+    font-weight: 600;
+    margin-left: 6px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(235,187,29,0.4);
+    transition: border-color 0.2s;
+  }
+  .announcement a:hover { border-color: var(--gold); }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 500;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-bottom: 2px solid var(--gold-pale);
+    box-shadow: 0 1px 20px rgba(235,187,29,0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(235,187,29,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    transition: box-shadow 0.3s var(--ease), border-color 0.3s;
+  }
+  header::after {
+    content: '';
+    position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+    opacity: 0.5;
+  }
+  header.scrolled { 
+    box-shadow: 0 4px 30px rgba(235,187,29,0.15), 0 0 40px rgba(0,0,0,0.05);
+    border-color: rgba(235,187,29,0.25);
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 12px 40px; height: auto;
+    padding: 0 40px; height: 85px;
+    display: flex; align-items: center; gap: 50px;
+    position: relative;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; flex-shrink: 0;
+    transition: transform 0.3s var(--ease);
+  }
+  .logo:hover { transform: translateY(-2px); }
+  .logo img { height: 80px; width: auto; object-fit: contain; }
+  .logo-text { display: flex; flex-direction: column; gap: 1px; }
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 100; color: var(--ink);
+    letter-spacing: 1px; line-height: 1;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px; font-weight: 800; color: var(--black);
+    letter-spacing: -0.2px; line-height: 1.1;
+  }
+  .logo-tagline-wrap { text-decoration: none; }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(235,187,29,0.5);
+    transition: all 0.3s var(--spring);
+  }
+  .logo-mark:hover {
+    transform: scale(1.08) rotate(-5deg);
+    box-shadow: 0 8px 24px rgba(235,187,29,0.6);
+  }
+  .logo-mark svg { width: 20px; height: 20px; color: var(--black); }
+  .logo-tag {
+    font-size: 8px; color: var(--gold-dark);
+    letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 700;
+    font-size: 9px; color: var(--gold-dark);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; opacity: 0.9;
+  }
+  nav { display: flex; align-items: center; gap: 8px; flex: 1; }
+  nav a {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-light);
+    text-decoration: none;
+    padding: 10px 18px; border-radius: var(--r-md);
+    transition: all 0.3s var(--ease);
+    white-space: nowrap;
+    position: relative;
+  }
+  nav a::after {
+    content: '';
+    position: absolute; bottom: 6px; left: 50%; right: 50%;
+    height: 2px; background: var(--gold);
+    transition: left 0.3s var(--ease), right 0.3s var(--ease);
+  }
+  nav a:hover {
+    color: var(--ink);
+    background: rgba(235,187,29,0.08);
+  }
+  nav a:hover::after { left: 18px; right: 18px; }
+  nav a.active {
+    color: var(--ink);
+    font-weight: 700;
+    background: rgba(235,187,29,0.12);
+  }
+  nav a.active::after { left: 18px; right: 18px; }
+  .header-actions {
+    display: flex; align-items: center; gap: 12px; margin-left: auto;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-icon {
+    width: 42px; height: 42px;
+    background: rgba(235,187,29,0.06);
+    border: 1.5px solid rgba(235,187,29,0.2);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-light);
+    transition: all 0.3s var(--ease);
+  }
+  .btn-icon:hover {
+    background: rgba(235,187,29,0.12);
+    border-color: var(--gold);
+    color: var(--gold-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(235,187,29,0.15);
+  }
+  .cart-rel { position: relative; }
+  .cart-count {
+    position: absolute; top: -8px; right: -8px;
+    width: 20px; height: 20px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 50%;
+    font-size: 11px; font-weight: 800; color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    border: 2.5px solid var(--white);
+    box-shadow: 0 2px 8px rgba(235,187,29,0.4);
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    color: var(--black);
+    border: none;
+    padding: 11px 28px;
+    border-radius: var(--r-md);
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 0 var(--gold-dark), 0 8px 20px rgba(235,187,29,0.35);
+    transition: all 0.3s var(--spring);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    position: relative; overflow: hidden;
+  }
+  .btn-gold::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
+    pointer-events: none;
+  }
+  .btn-gold::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), transparent);
+    pointer-events: none;
+  }
+  .btn-gold:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 0 var(--gold-dark), 0 12px 28px rgba(235,187,29,0.5);
+  }
+  .btn-gold:active { transform: translateY(-1px); box-shadow: 0 2px 0 var(--gold-dark), 0 4px 12px rgba(235,187,29,0.3); }
+
+  .btn-outline-dark {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid rgba(0,0,0,0.15);
+    padding: 9px 22px;
+    border-radius: var(--r-sm);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px;
+    transition: all 0.2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .btn-outline-dark:hover {
+    border-color: var(--gold);
+    color: var(--gold-dark);
+    background: rgba(235,187,29,0.04);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 90px 40px 80px;
+    overflow: hidden;
+  }
+  .hero-accent-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent 100%);
+  }
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px; align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-pale);
+    border: 1px solid rgba(235,187,29,0.3);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; color: #7A5E00;
+    margin-bottom: 24px; letter-spacing: 0.3px;
+  }
+  .hero-eyebrow .live-dot {
+    width: 7px; height: 7px;
+    background: var(--gold-dark);
+    border-radius: 50%;
+    animation: live 2s infinite;
+  }
+  @keyframes live {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:0.4;transform:scale(0.7)}
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 700; color: var(--ink);
+    line-height: 1.08; margin-bottom: 22px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 .gold-word { color: var(--gold-dark); font-style: italic; }
+  .hero-sub {
+    font-size: 16px; color: var(--ink-light);
+    line-height: 1.75; max-width: 460px;
+    margin-bottom: 38px; font-weight: 400;
+  }
+  .hero-cta { display: flex; gap: 14px; align-items: center; }
+  .hero-cta .btn-gold { padding: 13px 28px; font-size: 14px; }
+  .hero-ghost {
+    background: none; border: none;
+    color: var(--ink-light); font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .hero-ghost:hover { color: var(--ink); }
+  .play-circle {
+    width: 38px; height: 38px;
+    background: var(--gold-pale);
+    border: 1.5px solid rgba(235,187,29,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.3s var(--spring);
+  }
+  .hero-ghost:hover .play-circle {
+    background: var(--gold);
+    transform: scale(1.1);
+  }
+  .hero-stats {
+    display: flex; gap: 36px;
+    margin-top: 48px; padding-top: 36px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px; font-weight: 700; color: var(--ink);
+    line-height: 1;
+  }
+  .stat-val span { color: var(--gold-dark); }
+  .stat-lbl { font-size: 12px; color: var(--ink-faint); margin-top: 5px; letter-spacing: 0.3px; }
+
+  /* Hero card */
+  .hero-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-xl);
+    padding: 32px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(235,187,29,0.06);
+    position: relative;
+    animation: float-card 5s ease-in-out infinite;
+  }
+  @keyframes float-card {
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+  }
+  .hero-card-badge {
+    position: absolute; top: -14px; right: 24px;
+    background: var(--gold);
+    color: var(--black);
+    padding: 6px 16px; border-radius: 100px;
+    font-size: 12px; font-weight: 800;
+    box-shadow: var(--shadow-gold);
+    letter-spacing: 0.2px;
+  }
+  .card-device {
+    width: 100%; height: 180px;
+    background: var(--off-white);
+    border-radius: var(--r-md);
+    margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .card-device::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(235,187,29,0.05), transparent);
+  }
+  .hero-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700; color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .hero-card .card-sub { font-size: 13px; color: var(--ink-faint); margin-bottom: 16px; }
+  .card-price-row {
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .card-price { font-size: 28px; font-weight: 700; color: var(--ink); }
+  .card-monthly {
+    font-size: 13px; color: var(--ink-light);
+    background: var(--gold-pale);
+    border: 1px solid rgba(235,187,29,0.25);
+    padding: 3px 10px; border-radius: 100px;
+    color: #7A5E00; font-weight: 600;
+  }
+  .card-divider {
+    height: 1px; background: var(--black);
+    margin: 16px 0; opacity: 0.1;
+  }
+  .card-tags { display: flex; gap: 8px; }
+  .tag {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 100px;
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+  .tag-gold { background: rgba(235,187,29,0.1); color: var(--gold); border-color: var(--gold); }
+
+  /* ── PERKS BAR ── */
+  .perks-bar {
+    position: relative; z-index: 1;
+    background: var(--black);
+    padding: 22px 40px;
+  }
+  .perks-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 20px;
+  }
+  .perks-list { display: flex; gap: 48px; align-items: center; }
+  .perk {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .perk-icon {
+    width: 34px; height: 34px;
+    background: rgba(235,187,29,0.12);
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .perk-title { font-size: 13px; font-weight: 700; color: var(--white); }
+  .perk-sub { font-size: 11.5px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+  /* ── SHARED SECTION ── */
+  .section {
+    position: relative; z-index: 1;
+    padding: 80px 40px;
+  }
+  .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 44px;
+  }
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    margin-bottom: 10px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 20px; height: 1.5px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 700; color: var(--black);
+    line-height: 1.15; letter-spacing: -0.3px;
+  }
+  .section-link {
+    font-size: 13px; font-weight: 600; color: var(--black);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: var(--r-sm);
+    background: transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .section-link:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(235,187,29,0.08);
+  }
+  .bg-subtle { background: var(--white); }
+
+  /* ── CATEGORIES ── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+  }
+  .cat-card {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: var(--r-lg);
+    padding: 28px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s var(--spring);
+    position: relative; overflow: hidden;
+  }
+  .cat-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s var(--spring);
+    transform-origin: center;
+  }
+  .cat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(235,187,29,0.2);
+    border-color: var(--gold);
+  }
+  .cat-card:hover::after { transform: scaleX(1); }
+  .cat-icon {
+    width: 50px; height: 50px;
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--black);
+    transition: all 0.3s var(--spring);
+  }
+  .cat-card:hover .cat-icon {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 4px 16px rgba(235,187,29,0.35);
+  }
+  .cat-name { font-size: 13px; font-weight: 600; color: var(--black); transition: color 0.2s; }
+  .cat-count { font-size: 11px; color: rgba(0,0,0,0.4); }
+  .cat-card:hover .cat-name { color: var(--gold); }
+
+  /* ── PRODUCTS ── */
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+  .prod-card {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s var(--spring);
+  }
+  .prod-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  }
+  .prod-badge {
+    position: absolute; top: 14px; left: 14px;
+    padding: 4px 11px; border-radius: 100px;
+    font-size: 11px; font-weight: 700; z-index: 2;
+  }
+  .badge-hot { background: var(--gold); color: var(--black); box-shadow: 0 2px 8px rgba(235,187,29,0.3); }
+  .badge-new { background: var(--black); color: var(--white); }
+  .badge-sale { background: #E83535; color: var(--white); }
+  .prod-wish {
+    position: absolute; top: 12px; right: 12px;
+    width: 34px; height: 34px;
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2; color: var(--black);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+  }
+  .prod-wish:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: scale(1.12);
+    background: rgba(235,187,29,0.08);
+  }
+  .prod-img {
+    width: 100%; height: 200px;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+    border-bottom: 2px solid rgba(0,0,0,0.08);
+  }
+  .prod-img svg { width: 100px; height: 100px; transition: transform 0.4s var(--spring); }
+  .prod-card:hover .prod-img svg { transform: scale(1.1) translateY(-4px); }
+  .prod-body { padding: 20px; }
+  .prod-brand { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1.8px; margin-bottom: 5px; }
+  .prod-name { font-size: 14.5px; font-weight: 500; color: var(--black); margin-bottom: 10px; line-height: 1.4; }
+  .prod-stars { color: var(--gold); font-size: 12px; }
+  .prod-rcount { font-size: 12px; color: rgba(0,0,0,0.4); margin-left: 5px; }
+  .prod-rating { margin-bottom: 12px; }
+  .prod-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px; }
+  .prod-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 700; color: var(--gold);
+  }
+  .prod-old { font-size: 13px; color: rgba(0,0,0,0.4); text-decoration: line-through; }
+  .prod-save { font-size: 12px; color: #D32F2F; font-weight: 600; }
+  .prod-inst {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--black);
+    margin-bottom: 16px; opacity: 0.7;
+  }
+  .inst-pill {
+    background: rgba(235,187,29,0.1);
+    border: 1px solid rgba(235,187,29,0.3);
+    color: var(--gold);
+    padding: 3px 9px; border-radius: 100px;
+    font-size: 11px; font-weight: 700;
+  }
+  .btn-cart {
+    width: 100%;
+    background: var(--white);
+    border: 2px solid var(--black);
+    color: var(--black);
+    padding: 10px;
+    border-radius: var(--r-sm);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-cart:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    box-shadow: 0 4px 12px rgba(235,187,29,0.25);
+  }
+
+  /* ── BRANDS ── */
+  #jenama {
+    position: relative; z-index: 1;
+    background: var(--white);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 32px 40px;
+  }
+  .brands-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: center; gap: 0;
+    flex-wrap: wrap;
+  }
+  .brand-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-weight: 700;
+    color: rgba(0,0,0,0.2);
+    letter-spacing: 2.5px;
+    cursor: pointer;
+    padding: 10px 28px;
+    border-radius: var(--r-sm);
+    transition: all 0.25s;
+    position: relative;
+  }
+  .brand-item:not(:last-child)::after {
+    content: '';
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 1px; height: 18px;
+    background: var(--border);
+  }
+  .brand-item:hover {
+    color: var(--ink-muted);
+    background: rgba(235,187,29,0.06);
+  }
+
+  /* ── PROMO ── */
+  .promo-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; }
+  .promo-card {
+    border-radius: var(--r-xl);
+    padding: 44px;
+    position: relative; overflow: hidden;
+    min-height: 260px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    cursor: pointer;
+    transition: transform 0.3s var(--spring), box-shadow 0.3s;
+  }
+  .promo-card:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); }
+  .promo-card.dark {
+    background: var(--ink);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .promo-card.bright {
+    background: linear-gradient(135deg, var(--gold) 0%, #F5D76E 60%, #EBAA10 100%);
+  }
+  .promo-bg-text {
+    position: absolute; right: 28px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 120px; opacity: 0.06;
+    pointer-events: none; line-height: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+  }
+  .promo-card.dark .promo-bg-text { color: var(--white); opacity: 0.08; }
+  .promo-card.bright .promo-bg-text { color: var(--black); opacity: 0.08; }
+  .promo-tag {
+    display: inline-block;
+    padding: 4px 13px; border-radius: 100px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .promo-card.dark .promo-tag { background: var(--gold); color: var(--black); }
+  .promo-card.bright .promo-tag { background: rgba(0,0,0,0.12); color: rgba(0,0,0,0.7); border: 1px solid rgba(0,0,0,0.1); }
+  .promo-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700; margin-bottom: 8px;
+  }
+  .promo-card.dark h3 { color: var(--white); }
+  .promo-card.bright h3 { color: var(--black); }
+  .promo-card p { font-size: 13.5px; margin-bottom: 22px; font-weight: 400; }
+  .promo-card.dark p { color: rgba(255,255,255,0.55); }
+  .promo-card.bright p { color: rgba(0,0,0,0.60); }
+
+  /* ── INSTALLMENT ── */
+  .inst-section {
+    position: relative; z-index: 1;
+    padding: 88px 40px;
+    background: var(--white);
+  }
+  .inst-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .inst-desc { font-size: 15.5px; color: var(--ink-light); line-height: 1.8; margin: 16px 0 36px; }
+  .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .plan-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 26px 18px;
+    text-align: center;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s var(--spring);
+  }
+  .plan-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(235,187,29,0.4);
+  }
+  .plan-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(to bottom, var(--gold-pale), var(--white));
+    box-shadow: 0 0 0 1px rgba(235,187,29,0.2);
+  }
+  .plan-card.featured::before {
+    content: 'Popular';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    font-size: 9.5px; font-weight: 800;
+    padding: 3px 14px;
+    border-radius: 0 0 8px 8px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .plan-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 700; color: var(--black);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .plan-card.featured .plan-num { color: var(--gold); }
+  .plan-unit { font-size: 11px; color: var(--black); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; opacity: 0.6; }
+  .plan-rate { font-size: 12.5px; color: var(--black); }
+  .plan-rate strong { color: var(--gold); }
+
+  /* ── CALCULATOR ── */
+  .calculator {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: var(--r-xl);
+    padding: 36px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .calc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700; color: var(--black);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .calc-icon {
+    width: 38px; height: 38px;
+    background: var(--gold);
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(235,187,29,0.25);
+  }
+  .calc-field { margin-bottom: 20px; }
+  .calc-label {
+    display: block;
+    font-size: 11px; font-weight: 700;
+    color: var(--black);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 9px; opacity: 0.7;
+  }
+  .calc-field input, .calc-field select {
+    width: 100%;
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: var(--r-sm);
+    padding: 12px 14px;
+    font-size: 15px; color: var(--black);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .calc-field input:focus, .calc-field select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(235,187,29,0.15);
+  }
+  .calc-result {
+    background: rgba(235,187,29,0.05);
+    border: 2px solid var(--gold);
+    border-radius: var(--r-md);
+    padding: 20px 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 6px;
+  }
+  .calc-rlabel { font-size: 13px; font-weight: 600; color: var(--black); }
+  .calc-rsub { font-size: 11px; color: var(--black); margin-top: 3px; opacity: 0.6; }
+  .calc-ramount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 700; color: var(--gold);
+  }
+
+  /* ── TRUST ── */
+  .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .trust-card {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: var(--r-lg);
+    padding: 28px 22px;
+    display: flex; gap: 15px; align-items: flex-start;
+    transition: all 0.3s var(--spring);
+    cursor: default;
+  }
+  .trust-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(235,187,29,0.2);
+    border-color: var(--gold);
+  }
+  .trust-icon-wrap {
+    width: 44px; height: 44px;
+    background: rgba(235,187,29,0.1);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--gold);
+    transition: all 0.3s;
+  }
+  .trust-card:hover .trust-icon-wrap {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    transform: scale(1.08);
+  }
+  .trust-t { font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 5px; }
+  .trust-d { font-size: 13px; color: var(--black); line-height: 1.55; opacity: 0.7; }
+
+  /* ── PDF SECTION ── */
+  .pdf-section {
+    position: relative; z-index: 1;
+    padding: 80px 40px;
+    background: var(--white);
+  }
+  .pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .pdf-card {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-radius: var(--r-lg);
+    padding: 32px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s var(--spring);
+    position: relative; overflow: hidden;
+  }
+  .pdf-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    border-color: var(--gold);
+  }
+  .pdf-icon {
+    width: 70px; height: 70px;
+    background: rgba(235,187,29,0.1);
+    border: 2px solid var(--gold);
+    border-radius: var(--r-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    transition: all 0.3s var(--spring);
+  }
+  .pdf-card:hover .pdf-icon {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.12) rotate(-5deg);
+    box-shadow: 0 8px 24px rgba(235,187,29,0.3);
+  }
+  .pdf-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 700; color: var(--black);
+    line-height: 1.3;
+  }
+  .pdf-desc { font-size: 12px; color: var(--black); line-height: 1.5; opacity: 0.7; }
+  .pdf-size {
+    font-size: 11px; font-weight: 600;
+    color: var(--gold);
+    background: rgba(235,187,29,0.1);
+    padding: 4px 12px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-top: 8px;
+  }
+  .pdf-download {
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    width: 100%;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 12px; font-weight: 700;
+    transition: color 0.2s;
+  }
+  .pdf-card:hover .pdf-download { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    background: var(--black);
+    padding: 72px 40px 36px;
+  }
+  .footer-inner { max-width: 1280px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 56px; margin-bottom: 56px;
+  }
+  .footer-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: 1px; }
+  .footer-logo-tag { font-size: 9px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 3px; }
+  .footer-desc { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.75; margin: 18px 0 24px; max-width: 270px; }
+  .footer-social { display: flex; gap: 10px; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.35);
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .social-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    transform: translateY(-3px);
+  }
+  .footer-col h4 {
+    font-size: 10px; font-weight: 800;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase; letter-spacing: 2.5px;
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: rgba(255,255,255,0.40);
+    text-decoration: none;
+    font-size: 14px; font-weight: 400;
+    transition: color 0.2s;
+    display: inline-block;
+  }
+  .footer-col a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.22); }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.22); text-decoration: none; transition: color 0.2s; }
+  .footer-legal a:hover { color: var(--gold); }
+
+  /* ── SCROLL TOP ── */
+  .scroll-top {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 44px; height: 44px;
+    background: var(--gold);
+    border: 2px solid var(--gold-dark);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-gold);
+    z-index: 999;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.3s, transform 0.4s var(--spring), box-shadow 0.2s;
+  }
+  .scroll-top.vis { opacity: 1; transform: translateY(0); }
+  .scroll-top:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(235,187,29,0.5); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+  .reveal.vis { opacity: 1; transform: none; }
+  .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.55s var(--ease), transform 0.55s var(--ease); }
+  .stagger.vis > *:nth-child(1) { opacity:1;transform:none;transition-delay:0.05s }
+  .stagger.vis > *:nth-child(2) { opacity:1;transform:none;transition-delay:0.11s }
+  .stagger.vis > *:nth-child(3) { opacity:1;transform:none;transition-delay:0.17s }
+  .stagger.vis > *:nth-child(4) { opacity:1;transform:none;transition-delay:0.23s }
+  .stagger.vis > *:nth-child(5) { opacity:1;transform:none;transition-delay:0.29s }
+  .stagger.vis > *:nth-child(6) { opacity:1;transform:none;transition-delay:0.35s }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:1100px){
+    .cat-grid{grid-template-columns:repeat(3,1fr)}
+    .prod-grid{grid-template-columns:repeat(2,1fr)}
+    .trust-grid{grid-template-columns:repeat(2,1fr)}
+    .pdf-grid{grid-template-columns:repeat(2,1fr)}
+    .inst-inner{grid-template-columns:1fr;gap:44px}
+    .footer-top{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:768px){
+    .header-inner{padding:0 20px;gap:16px}
+    nav{display:none}
+    .hero{padding:60px 20px 50px}
+    .hero-inner{grid-template-columns:1fr;gap:40px}
+    .hero-card{display:none}
+    .section{padding:52px 20px}
+    .pdf-section{padding:52px 20px}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .prod-grid{grid-template-columns:1fr 1fr}
+    .pdf-grid{grid-template-columns:1fr}
+    .promo-grid{grid-template-columns:1fr}
+    .trust-grid{grid-template-columns:1fr}
+    .footer-top{grid-template-columns:1fr}
+    .plans-grid{grid-template-columns:1fr}
+    .perks-inner{flex-direction:column;gap:16px}
+    .perks-list{gap:20px;flex-wrap:wrap}
+    footer{padding:48px 20px 28px}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+<div class="bg-dots"></div>
+
+<!-- Announcement -->
+<div class="announcement">
+  🎉 Ansuran <strong>0% Faedah</strong> sehingga 24 bulan — Layak untuk semua produk pilihan.
+  <a href="#ansuran">Ketahui lebih lanjut →</a>
+</div>
+
+<!-- Header -->
+<header id="hdr">
+  <div class="header-inner">
+      <a href="" class="logo">
+    <div class="logo-container" style="display: flex; align-items: center;">
+      <a href="" class="logo">
+        <img src="logo1.png" alt="KO-Digital Logo">
+        <div class="logo-text">
+          <span class="logo-name">KO-DIGITAL</span>
+          <a href="https://aredutech.com/" style="text-decoration: none;">
+          </a>
+        </div>
+      </a>
+    </a>
+    </div>
+
+    <nav>
+      <a href="#" class="active">Main</a>
+      <a href="#produk">Produk</a>
+      <a href="#ansuran">Ansuran</a>
+      <a href="#jenama">Jenama</a>
+      <a href="#promosi">Promosi</a>
+      <a href="#dokumen">Dokumen</a>
+      <a href="#">Hubungi</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn-icon">
+        <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="btn-icon cart-rel">
+        <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count">3</span>
+      </button>
+      <a href="#" class="btn-gold">Daftar Masuk</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-accent-line"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="live-dot"></span>
+        Ansuran Terbaik Malaysia
+      </div>
+      <h1>Elektronik<br><span class="gold-word">Premium,</span><br>Bayaran Mudah</h1>
+      <p class="hero-sub">Dapatkan produk elektronik pilihan dengan kemudahan bayaran ansuran sehingga 24 bulan, tiada faedah tersembunyi. Khas untuk warga pendidik Malaysia.</p>
+      <div class="hero-cta">
+        <a href="#produk" class="btn-gold">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          Beli Sekarang
+        </a>
+        <button class="hero-ghost">
+          <div class="play-circle">
+            <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+          Tonton Video
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val">50K<span>+</span></div>
+          <div class="stat-lbl">Pelanggan Berdaftar</div>
+        </div>
+        <div>
+          <div class="stat-val">500<span>+</span></div>
+          <div class="stat-lbl">Produk Tersedia</div>
+        </div>
+        <div>
+          <div class="stat-val">24</div>
+          <div class="stat-lbl">Bulan Ansuran</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="hero-card">
+        <div class="hero-card-badge">✦ 0% Faedah</div>
+        <div class="card-device">
+          <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="140">
+            <rect x="10" y="10" width="180" height="110" rx="7" fill="#F0EDE8" stroke="#E0DDD8" stroke-width="1.5"/>
+            <rect x="18" y="18" width="164" height="94" rx="4" fill="#FAFAF8"/>
+            <rect x="28" y="30" width="70" height="5" rx="2.5" fill="#EBBB1D" opacity="0.6"/>
+            <rect x="28" y="42" width="120" height="3.5" rx="1.5" fill="#E0DDD8"/>
+            <rect x="28" y="52" width="100" height="3.5" rx="1.5" fill="#E0DDD8"/>
+            <rect x="28" y="62" width="80" height="3.5" rx="1.5" fill="#E0DDD8"/>
+            <rect x="28" y="78" width="44" height="20" rx="5" fill="#EBBB1D"/>
+            <rect x="80" y="82" width="36" height="12" rx="3" fill="#F0EDE8" stroke="#E0DDD8"/>
+            <rect x="145" y="18" width="26" height="26" rx="4" fill="#EBBB1D" opacity="0.15"/>
+            <circle cx="158" cy="31" r="8" fill="#EBBB1D" opacity="0.5"/>
+            <rect x="0" y="122" width="200" height="10" rx="3" fill="#E8E5E0"/>
+            <rect x="70" y="132" width="60" height="8" rx="2" fill="#DDD"/>
+          </svg>
+        </div>
+        <h3>TESTING</h3>
+        <p class="card-sub">Apple · 13-inch · 2024</p>
+        <div class="card-price-row">
+          <span class="card-price">RM 5,299</span>
+          <span class="card-monthly">RM 220/bulan</span>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-tags">
+          <span class="tag tag-gold">Ansuran 24 Bulan</span>
+          <span class="tag">Waranti Rasmi</span>
+          <span class="tag">Stok Ada</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Perks Bar -->
+<div class="perks-bar">
+  <div class="perks-inner">
+    <div class="perks-list">
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="perk-title">Tanpa Faedah</div>
+          <div class="perk-sub">0% untuk semua pelan</div>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="perk-title">Sehingga 24 Bulan</div>
+          <div class="perk-sub">Bayaran fleksibel</div>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="perk-title">Lulus Segera</div>
+          <div class="perk-sub">Keputusan dalam 5 minit</div>
+        </div>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="perk-title">Hantar 1–3 Hari</div>
+          <div class="perk-sub">Seluruh Malaysia</div>
+        </div>
+      </div>
+    </div>
+    <a href="#ansuran" class="btn-gold">Kira Ansuran</a>
+  </div>
+</div>
+
+<!-- Categories -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Kategori</div>
+        <h2 class="section-title">Semak Ikut Jenis</h2>
+      </div>
+      <a href="#" class="section-link">Semua Kategori <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="cat-grid stagger">
+      <a href="#" class="cat-card">
+        <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <span class="cat-name">Laptop</span>
+        <span class="cat-count">48 produk</span>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <span class="cat-name">Telefon</span>
+        <span class="cat-count">95 produk</span>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+        <span class="cat-name">Monitor</span>
+        <span class="cat-count">32 produk</span>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="1"/><rect x="9" y="7" width="6" height="6"/></svg></div>
+        <span class="cat-name">Tablet</span>
+        <span class="cat-count">27 produk</span>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></div>
+        <span class="cat-name">Audio</span>
+        <span class="cat-count">61 produk</span>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
+        <span class="cat-name">Aksesori</span>
+        <span class="cat-count">120 produk</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section id="produk" class="section bg-subtle">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Produk Pilihan</div>
+        <h2 class="section-title">Terlaris Minggu Ini</h2>
+      </div>
+      <a href="#" class="section-link">Lihat Semua <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="prod-grid stagger">
+
+      <!-- P1 -->
+      <div class="prod-card">
+        <span class="prod-badge badge-hot">🔥 Terlaris</span>
+        <button class="prod-wish">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prod-img">
+          <svg viewBox="0 0 100 100" fill="none" width="100" height="100">
+            <rect x="5" y="15" width="90" height="58" rx="5" fill="#E8E4DF" stroke="#D8D4CF" stroke-width="1"/>
+            <rect x="12" y="22" width="76" height="44" rx="3" fill="#FAFAF8"/>
+            <rect x="20" y="30" width="40" height="4" rx="2" fill="#EBBB1D" opacity="0.7"/>
+            <rect x="20" y="38" width="60" height="3" rx="2" fill="#DDD"/>
+            <rect x="20" y="44" width="50" height="3" rx="2" fill="#DDD"/>
+            <rect x="20" y="54" width="25" height="9" rx="3" fill="#EBBB1D" opacity="0.9"/>
+            <rect x="30" y="74" width="40" height="5" rx="2" fill="#DDD"/>
+            <rect x="0" y="79" width="100" height="7" rx="3" fill="#E0DDD8"/>
+          </svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-brand">Apple</div>
+          <div class="prod-name">MacBook Air M3 13-inch 2024</div>
+          <div class="prod-rating"><span class="prod-stars">★★★★★</span><span class="prod-rcount">(248)</span></div>
+          <div class="prod-price-row">
+            <span class="prod-price">RM 5,299</span>
+            <span class="prod-old">RM 5,799</span>
+          </div>
+          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 220/bulan</div>
+          <button class="btn-cart">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+            Tambah ke Troli
+          </button>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="prod-card">
+        <span class="prod-badge badge-new">Baru</span>
+        <button class="prod-wish">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prod-img">
+          <svg viewBox="0 0 100 100" fill="none" width="100" height="100">
+            <rect x="28" y="5" width="44" height="90" rx="6" fill="#E8E4DF" stroke="#D8D4CF" stroke-width="1"/>
+            <rect x="32" y="12" width="36" height="70" rx="3" fill="#FAFAF8"/>
+            <circle cx="50" cy="88" r="4" fill="#D0CCC8"/>
+            <rect x="40" y="8" width="20" height="3" rx="1.5" fill="#C8C4C0"/>
+            <rect x="38" y="30" width="24" height="24" rx="12" fill="#EBBB1D" opacity="0.2"/>
+            <circle cx="50" cy="42" r="8" fill="#EBBB1D" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-brand">Samsung</div>
+          <div class="prod-name">Samsung Galaxy S25 Ultra 5G</div>
+          <div class="prod-rating"><span class="prod-stars">★★★★★</span><span class="prod-rcount">(312)</span></div>
+          <div class="prod-price-row"><span class="prod-price">RM 4,799</span></div>
+          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 200/bulan</div>
+          <button class="btn-cart">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+            Tambah ke Troli
+          </button>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="prod-card">
+        <span class="prod-badge badge-sale">−15%</span>
+        <button class="prod-wish">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prod-img">
+          <svg viewBox="0 0 100 100" fill="none" width="100" height="100">
+            <rect x="8" y="18" width="84" height="56" rx="4" fill="#E8E4DF" stroke="#D8D4CF" stroke-width="1"/>
+            <rect x="13" y="23" width="74" height="46" rx="2" fill="#FAFAF8"/>
+            <line x1="50" y1="74" x2="50" y2="86" stroke="#C8C4C0" stroke-width="3"/>
+            <rect x="20" y="80" width="60" height="8" rx="3" fill="#E0DDD8"/>
+            <rect x="20" y="30" width="60" height="32" rx="2" fill="#EBBB1D" opacity="0.08"/>
+            <circle cx="50" cy="46" r="12" fill="none" stroke="#EBBB1D" stroke-width="2" opacity="0.5"/>
+            <circle cx="50" cy="46" r="5" fill="#EBBB1D" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-brand">Dell</div>
+          <div class="prod-name">Dell UltraSharp 27" 4K Monitor</div>
+          <div class="prod-rating"><span class="prod-stars">★★★★☆</span><span class="prod-rcount">(89)</span></div>
+          <div class="prod-price-row">
+            <span class="prod-price">RM 2,549</span>
+            <span class="prod-old">RM 2,999</span>
+            <span class="prod-save">−RM450</span>
+          </div>
+          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 106/bulan</div>
+          <button class="btn-cart">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+            Tambah ke Troli
+          </button>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="prod-card">
+        <button class="prod-wish">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+        <div class="prod-img">
+          <svg viewBox="0 0 100 100" fill="none" width="100" height="100">
+            <rect x="22" y="12" width="56" height="68" rx="4" fill="#E8E4DF" stroke="#D8D4CF" stroke-width="1"/>
+            <rect x="27" y="17" width="46" height="58" rx="2" fill="#FAFAF8"/>
+            <rect x="33" y="26" width="34" height="34" rx="2" fill="#EBBB1D" opacity="0.15"/>
+            <rect x="33" y="64" width="20" height="3" rx="1" fill="#DDD"/>
+            <rect x="33" y="70" width="28" height="3" rx="1" fill="#DDD"/>
+          </svg>
+        </div>
+        <div class="prod-body">
+          <div class="prod-brand">Lenovo</div>
+          <div class="prod-name">Lenovo Tab P12 Pro 5G Tablet</div>
+          <div class="prod-rating"><span class="prod-stars">★★★★★</span><span class="prod-rcount">(156)</span></div>
+          <div class="prod-price-row"><span class="prod-price">RM 2,199</span></div>
+          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 92/bulan</div>
+          <button class="btn-cart">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+            Tambah ke Troli
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Brands -->
+<div id="jenama">
+  <div class="brands-inner">
+    <span class="brand-item">APPLE</span>
+    <span class="brand-item">SAMSUNG</span>
+    <span class="brand-item">DELL</span>
+    <span class="brand-item">LENOVO</span>
+    <span class="brand-item">HP</span>
+    <span class="brand-item">SONY</span>
+    <span class="brand-item">ASUS</span>
+  </div>
+</div>
+
+<!-- Promo -->
+<section id="promosi" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Tawaran Istimewa</div>
+        <h2 class="section-title">Promosi Bulan Ini</h2>
+      </div>
+    </div>
+    <div class="promo-grid stagger">
+      <div class="promo-card dark">
+        <div class="promo-bg-text">💻</div>
+        <div>
+          <span class="promo-tag">Had Masa</span>
+          <h3>Laptop Education Bundle</h3>
+          <p>Laptop + Bag + Mouse percuma untuk semua guru berdaftar</p>
+          <a href="#" class="btn-gold" style="align-self:flex-start;">Tuntut Sekarang</a>
+        </div>
+      </div>
+      <div class="promo-card bright">
+        <div class="promo-bg-text">📱</div>
+        <div>
+          <span class="promo-tag">Eksklusif Ahli</span>
+          <h3>Telefon Trade-In Bonus</h3>
+          <p>Tukar telefon lama, dapat kredit sehingga RM 500</p>
+          <a href="#" class="btn-outline-dark">Ketahui Lebih</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Installment -->
+<section id="ansuran" class="inst-section bg-subtle">
+  <div class="inst-inner section-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Kemudahan Bayaran</div>
+      <h2 class="section-title">Ansuran Mudah,<br>Tiada Beban</h2>
+      <p class="inst-desc">Kami menawarkan pelan ansuran yang fleksibel dengan kadar faedah 0% untuk memudahkan anda memiliki produk elektronik impian tanpa tekanan kewangan.</p>
+      <div class="plans-grid stagger">
+        <div class="plan-card">
+          <div class="plan-num">6</div>
+          <div class="plan-unit">Bulan</div>
+          <div class="plan-rate"><strong>0%</strong> faedah</div>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-num">12</div>
+          <div class="plan-unit">Bulan</div>
+          <div class="plan-rate"><strong>0%</strong> faedah</div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-num">24</div>
+          <div class="plan-unit">Bulan</div>
+          <div class="plan-rate"><strong>0%</strong> faedah</div>
+        </div>
+      </div>
+    </div>
+    <div class="calculator reveal">
+      <div class="calc-title">
+        <div class="calc-icon">📊</div>
+        Kira Ansuran Anda
+      </div>
+      <div class="calc-field">
+        <label class="calc-label">Harga Produk (RM)</label>
+        <input type="number" id="calcPrice" placeholder="cth: 3500" oninput="calcInst()">
+      </div>
+      <div class="calc-field">
+        <label class="calc-label">Tempoh Ansuran</label>
+        <select id="calcMonths" onchange="calcInst()">
+          <option value="6">6 Bulan</option>
+          <option value="12" selected>12 Bulan</option>
+          <option value="24">24 Bulan</option>
+        </select>
+      </div>
+      <div class="calc-result">
+        <div>
+          <div class="calc-rlabel">Bayaran Bulanan</div>
+          <div class="calc-rsub">0% faedah dikenakan</div>
+        </div>
+        <div class="calc-ramount" id="calcResult">RM 0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Kepercayaan Anda</div>
+        <h2 class="section-title">Mengapa KO-Digital?</h2>
+      </div>
+    </div>
+    <div class="trust-grid stagger">
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="trust-t">Produk 100% Original</div>
+          <div class="trust-d">Semua produk adalah original berwaranti rasmi pengeluar.</div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="trust-t">Penghantaran Pantas</div>
+          <div class="trust-d">Terima dalam 1-3 hari bekerja ke seluruh Malaysia.</div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div>
+          <div class="trust-t">Sokongan 24/7</div>
+          <div class="trust-d">Pasukan kami sedia membantu anda bila-bila masa.</div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon-wrap">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <div class="trust-t">Berdaftar & Dikawal Selia</div>
+          <div class="trust-d">Koperasi berdaftar di bawah Suruhanjaya Koperasi Malaysia.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PDF Resources Section -->
+<section id="dokumen" class="pdf-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Sumber Maklumat</div>
+        <h2 class="section-title">Panduan & Dokumen</h2>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-light); text-align: right;">Muat turun panduan, terma dan syarat, serta dokumen penting lainnya</p>
+    </div>
+    <div class="pdf-grid stagger">
+      <a href="#" class="pdf-card" onclick="downloadPDF(event, 'Panduan_Pendaftaran.pdf')">
+        <div class="pdf-icon">📋</div>
+        <div class="pdf-title">Panduan Pendaftaran</div>
+        <div class="pdf-desc">Langkah demi langkah cara mendaftar dan membuat akaun</div>
+        <span class="pdf-size">2.4 MB</span>
+        <div class="pdf-download">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Muat Turun
+        </div>
+      </a>
+
+      <a href="#" class="pdf-card" onclick="downloadPDF(event, 'Syarat_Ansuran.pdf')">
+        <div class="pdf-icon">📑</div>
+        <div class="pdf-title">Syarat & Ansuran</div>
+        <div class="pdf-desc">Terma pembayaran, kadar faedah, dan syarat kelayakan</div>
+        <span class="pdf-size">1.8 MB</span>
+        <div class="pdf-download">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Muat Turun
+        </div>
+      </a>
+
+      <a href="#" class="pdf-card" onclick="downloadPDF(event, 'Privasi_Keselamatan.pdf')">
+        <div class="pdf-icon">🔒</div>
+        <div class="pdf-title">Privasi & Keselamatan</div>
+        <div class="pdf-desc">Dasar privasi dan perlindungan data peribadi anda</div>
+        <span class="pdf-size">1.2 MB</span>
+        <div class="pdf-download">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Muat Turun
+        </div>
+      </a>
+
+      <a href="#" class="pdf-card" onclick="downloadPDF(event, 'FAQ_Koperasi.pdf')">
+        <div class="pdf-icon">❓</div>
+        <div class="pdf-title">Soalan Lazim (FAQ)</div>
+        <div class="pdf-desc">Jawapan kepada soalan yang sering ditanya</div>
+        <span class="pdf-size">0.9 MB</span>
+        <div class="pdf-download">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Muat Turun
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:0;">
+          <div class="logo-mark" style="background:var(--gold);">
+            <svg viewBox="0 0 22 22" fill="none" width="22" height="22">
+              <rect x="2" y="2" width="5" height="18" fill="#0E0E0E"/>
+              <polygon points="7,11 16,2 19,2 10,11 19,20 16,20" fill="#0E0E0E"/>
+              <path d="M13 5 C17 5 20 7.7 20 11 C20 14.3 17 17 13 17" stroke="#0E0E0E" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+          </div>
+          <div>
+            <div class="footer-logo-name">KO-DIGITAL</div>
+            <div class="footer-logo-tag">Koperasi Pendidik Digital</div>
+          </div>
+        </div>
+        <p class="footer-desc">Platform e-dagang elektronik khas untuk warga pendidik Malaysia, dengan kemudahan ansuran 0% faedah sehingga 24 bulan.</p>
+        <div class="footer-social">
+          <div class="social-btn">f</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">tw</div>
+          <div class="social-btn">ig</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Produk</h4>
+        <ul>
+          <li><a href="#">Laptop & Komputer</a></li>
+          <li><a href="#">Telefon Pintar</a></li>
+          <li><a href="#">Tablet</a></li>
+          <li><a href="#">Monitor & TV</a></li>
+          <li><a href="#">Audio & Aksesori</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ansuran</h4>
+        <ul>
+          <li><a href="#">Cara Mohon</a></li>
+          <li><a href="#">Syarat Kelayakan</a></li>
+          <li><a href="#">Kalkulator Ansuran</a></li>
+          <li><a href="#">Soalan Lazim</a></li>
+          <li><a href="#">Status Permohonan</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Syarikat</h4>
+        <ul>
+          <li><a href="#">Tentang Kami</a></li>
+          <li><a href="#">Kerjaya</a></li>
+          <li><a href="#">Rakan Kongsi</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Hubungi Kami</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 KO-Digital — Koperasi Pendidik Digital Malaysia Berhad (SKM 0012345-K). Hak cipta terpelihara.</p>
+      <div class="footer-legal">
+        <a href="#">Dasar Privasi</a>
+        <a href="#">Terma & Syarat</a>
+        <a href="#">Pemulangan</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#0E0E0E" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+  const hdr = document.getElementById('hdr');
+  const scrollTop = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) { hdr.classList.add('scrolled'); scrollTop.classList.add('vis'); }
+    else { hdr.classList.remove('scrolled'); scrollTop.classList.remove('vis'); }
+  });
+
+  function downloadPDF(event, filename) {
+    event.preventDefault();
+    // Create a simple download mechanism
+    const link = document.createElement('a');
+    link.href = '#';
+    link.download = filename;
+    // For demo purposes, show an alert. In production, replace with actual PDF file paths
+    alert('Muat turun: ' + filename + '\n\nUntuk menambah PDF sebenar, sila gantikan URL dengan fail PDF sebenar dalam folder anda.');
+    // Uncomment line below to actually download if PDF files exist:
+    // link.click();
+  }
+
+  function calcInst() {
+    const p = parseFloat(document.getElementById('calcPrice').value) || 0;
+    const m = parseInt(document.getElementById('calcMonths').value);
+    const r = document.getElementById('calcResult');
+    if (p > 0) {
+      const monthly = (p / m).toFixed(2);
+      r.textContent = 'RM ' + parseFloat(monthly).toLocaleString('ms-MY', {minimumFractionDigits: 2});
+    } else {
+      r.textContent = 'RM 0';
+    }
+  }
+
+  document.querySelectorAll('.prod-wish').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const svg = this.querySelector('svg');
+      const filled = svg.getAttribute('fill') !== 'none';
+      svg.setAttribute('fill', filled ? 'none' : '#EBBB1D');
+      svg.setAttribute('stroke', filled ? 'currentColor' : '#C9920A');
+      this.style.borderColor = filled ? '' : 'rgba(235,187,29,0.5)';
+      this.style.color = filled ? '' : '#C9920A';
+    });
+  });
+
+  document.querySelectorAll('.btn-cart').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const orig = this.innerHTML;
+      this.innerHTML = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Ditambah!';
+      this.style.background = '#E8F5E9';
+      this.style.borderColor = '#A5D6A7';
+      this.style.color = '#2E7D32';
+      setTimeout(() => { this.innerHTML = orig; this.style.background = ''; this.style.borderColor = ''; this.style.color = ''; }, 1600);
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
