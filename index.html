@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KO-Digital — Koperasi Pendidik Digital Malaysia Berhad</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -34,6 +35,91 @@
     --ease: cubic-bezier(0.4,0,0.2,1);
   }
 
+  /* DARK MODE - EXCLUDE FOOTER */
+  body.dark-mode {
+    --white: #1A1A1A;
+    --off-white: #2A2A2A;
+    --black: #FFFFFF;
+    --ink: #F0F0F0;
+    --ink-muted: #C0C0C0;
+    --ink-light: #909090;
+    --ink-faint: #606060;
+    --border: rgba(255,255,255,0.1);
+    --border-gold: rgba(235,187,29,0.5);
+  }
+
+  body.dark-mode header {
+    background: linear-gradient(180deg, rgba(26,26,26,0.98) 0%, rgba(42,42,42,0.95) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-bottom: 2px solid rgba(235,187,29,0.2);
+    box-shadow: 0 1px 20px rgba(235,187,29,0.08);
+  }
+
+  body.dark-mode header.scrolled {
+    box-shadow: 0 4px 30px rgba(235,187,29,0.15), 0 0 40px rgba(0,0,0,0.1);
+    border-color: rgba(235,187,29,0.25);
+  }
+
+  body.dark-mode .announcement {
+    background: #1A1A1A;
+    color: rgba(255,255,255,0.85);
+  }
+
+  body.dark-mode .perks-bar {
+    background: #1A1A1A;
+  }
+
+  body.dark-mode .bg-pattern {
+    background-image:
+      radial-gradient(circle at 85% 10%, rgba(235,187,29,0.04) 0%, transparent 45%),
+      radial-gradient(circle at 10% 85%, rgba(235,187,29,0.03) 0%, transparent 40%);
+  }
+
+  body.dark-mode .bg-dots {
+    background-image: radial-gradient(circle, rgba(235,187,29,0.04) 1px, transparent 1px);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 75%);
+  }
+
+  body.dark-mode .section.bg-subtle {
+    background: #1A1A1A;
+  }
+
+  body.dark-mode .inst-section {
+    background: #1A1A1A;
+  }
+
+  body.dark-mode .pdf-section {
+    background: #1A1A1A;
+  }
+
+  body.dark-mode .calculator {
+    background: #2A2A2A;
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  body.dark-mode .calc-field input,
+  body.dark-mode .calc-field select {
+    background: #1A1A1A;
+    border-color: rgba(255,255,255,0.1);
+    color: #F0F0F0;
+  }
+
+  body.dark-mode .calc-field input:focus,
+  body.dark-mode .calc-field select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(235,187,29,0.15);
+  }
+
+  body.dark-mode .calc-result {
+    background: rgba(235,187,29,0.05);
+    border-color: var(--gold);
+  }
+
+  body.dark-mode .scroll-top svg {
+    stroke: #FFFFFF;
+  }
+
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -41,6 +127,7 @@
     background: var(--white);
     color: var(--ink);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* ── DECORATIVE BG ── */
@@ -79,7 +166,7 @@
   }
   .announcement a:hover { border-color: var(--gold); }
 
-  /* ── HEADER ── */
+  /* ── HEADER DENGAN SPACING YANG PERFECT ── */
   header {
     position: sticky; top: 0; z-index: 500;
     background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%);
@@ -87,10 +174,6 @@
     -webkit-backdrop-filter: blur(25px);
     border-bottom: 2px solid var(--gold-pale);
     box-shadow: 0 1px 20px rgba(235,187,29,0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(235,187,29,0.15);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     transition: box-shadow 0.3s var(--ease), border-color 0.3s;
   }
   header::after {
@@ -106,11 +189,12 @@
   }
   .header-inner {
     max-width: 1280px; margin: 0 auto;
-    padding: 12px 40px; height: auto;
-    padding: 0 40px; height: 85px;
-    display: flex; align-items: center; gap: 50px;
+    padding: 0 0px; height: 85px;
+    display: flex; align-items: center; gap: 20px; /* SPACING YANG PERFECT */
     position: relative;
   }
+
+  /* LOGO SECTION */
   .logo {
     display: flex; align-items: center; gap: 14px;
     text-decoration: none; flex-shrink: 0;
@@ -118,39 +202,26 @@
   }
   .logo:hover { transform: translateY(-2px); }
   .logo img { height: 80px; width: auto; object-fit: contain; }
-  .logo-text { display: flex; flex-direction: column; gap: 1px; }
-  .logo-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; font-weight: 100; color: var(--ink);
-    letter-spacing: 1px; line-height: 1;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px; font-weight: 800; color: var(--black);
-    letter-spacing: -0.2px; line-height: 1.1;
+  .logo-text { 
+    display: flex; flex-direction: column; gap: 2px;
+    margin-left: 4px; /* EXTRA GAP ANTARA LOGO & TEXT */
   }
-  .logo-tagline-wrap { text-decoration: none; }
-  .logo-mark {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius: var(--r-sm);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(235,187,29,0.5);
-    transition: all 0.3s var(--spring);
+  .header-logo-name { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 22px; font-weight: 700; 
+    color: var(--black); letter-spacing: 1px; 
   }
-  .logo-mark:hover {
-    transform: scale(1.08) rotate(-5deg);
-    box-shadow: 0 8px 24px rgba(235,187,29,0.6);
+  .header-logo-tag { 
+    font-size: 9px; color: var(--gold); 
+    letter-spacing: 1.5px; text-transform: uppercase; 
+    margin-top: 2px; 
   }
-  .logo-mark svg { width: 20px; height: 20px; color: var(--black); }
-  .logo-tag {
-    font-size: 8px; color: var(--gold-dark);
-    letter-spacing: 2px; text-transform: uppercase;
-    font-weight: 700;
-    font-size: 9px; color: var(--gold-dark);
-    letter-spacing: 1.5px; text-transform: uppercase;
-    font-weight: 600; opacity: 0.9;
+
+  /* NAV - DENGAN SPACING YANG CANTIK */
+  nav { 
+    display: flex; align-items: center; gap: 8px; 
+    flex: 1; margin-left: 20px; /* EXTRA SPACE DARI LOGO */
   }
-  nav { display: flex; align-items: center; gap: 8px; flex: 1; }
   nav a {
     font-size: 14px; font-weight: 500;
     color: var(--ink-light);
@@ -952,10 +1023,10 @@
   }
   .pdf-card:hover .pdf-download { color: var(--gold); }
 
-  /* ── FOOTER ── */
+  /* ── FOOTER - KEKAL GELAP TANPA DARK MODE ── */
   footer {
     position: relative; z-index: 1;
-    background: var(--black);
+    background: #0E0E0E !important; /* FORCE GELAP */
     padding: 72px 40px 36px;
   }
   .footer-inner { max-width: 1280px; margin: 0 auto; }
@@ -964,52 +1035,52 @@
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 56px; margin-bottom: 56px;
   }
-  .footer-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: 1px; }
-  .footer-logo-tag { font-size: 9px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 3px; }
-  .footer-desc { font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.75; margin: 18px 0 24px; max-width: 270px; }
+  .footer-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: #FFFFFF !important; letter-spacing: 1px; }
+  .footer-logo-tag { font-size: 9px; color: #EBBB1D !important; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 3px; }
+  .footer-desc { font-size: 14px; color: rgba(255,255,255,0.35) !important; line-height: 1.75; margin: 18px 0 24px; max-width: 270px; }
   .footer-social { display: flex; gap: 10px; }
   .social-btn {
     width: 36px; height: 36px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
     border-radius: var(--r-sm);
     display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.35) !important;
     font-size: 12px; font-weight: 700; cursor: pointer;
     transition: all 0.25s;
   }
   .social-btn:hover {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--black);
+    background: var(--gold) !important;
+    border-color: var(--gold) !important;
+    color: var(--black) !important;
     transform: translateY(-3px);
   }
   .footer-col h4 {
     font-size: 10px; font-weight: 800;
-    color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.25) !important;
     text-transform: uppercase; letter-spacing: 2.5px;
     margin-bottom: 20px;
   }
   .footer-col ul { list-style: none; }
   .footer-col li { margin-bottom: 12px; }
   .footer-col a {
-    color: rgba(255,255,255,0.40);
+    color: rgba(255,255,255,0.40) !important;
     text-decoration: none;
     font-size: 14px; font-weight: 400;
     transition: color 0.2s;
     display: inline-block;
   }
-  .footer-col a:hover { color: var(--gold-light); }
+  .footer-col a:hover { color: #F5D88A !important; }
   .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.07);
     padding-top: 28px;
     display: flex; justify-content: space-between; align-items: center;
     flex-wrap: wrap; gap: 12px;
   }
-  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.22); }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.22) !important; }
   .footer-legal { display: flex; gap: 24px; }
-  .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.22); text-decoration: none; transition: color 0.2s; }
-  .footer-legal a:hover { color: var(--gold); }
+  .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.22) !important; text-decoration: none; transition: color 0.2s; }
+  .footer-legal a:hover { color: #EBBB1D !important; }
 
   /* ── SCROLL TOP ── */
   .scroll-top {
@@ -1076,45 +1147,42 @@
 
 <!-- Announcement -->
 <div class="announcement">
-  🎉 Ansuran <strong>0% Faedah</strong> sehingga 24 bulan — Layak untuk semua produk pilihan.
-  <a href="#ansuran">Ketahui lebih lanjut →</a>
+  <span data-ms="🎉 Ansuran <strong>0% Faedah</strong> sehingga 24 bulan — Layak untuk semua produk pilihan." data-en="🎉 <strong>0% Interest</strong> installment up to 24 months — Eligible for all selected products.">🎉 Ansuran <strong>0% Faedah</strong> sehingga 24 bulan — Layak untuk semua produk pilihan.</span>
+  <a href="#ansuran" data-ms="Ketahui lebih lanjut →" data-en="Learn more →">Ketahui lebih lanjut →</a>
 </div>
 
 <!-- Header -->
 <header id="hdr">
   <div class="header-inner">
-      <a href="" class="logo">
-    <div class="logo-container" style="display: flex; align-items: center;">
-      <a href="" class="logo">
-        <img src="logo1.png" alt="KO-Digital Logo">
-        <div class="logo-text">
-          <span class="logo-name">KO-DIGITAL</span>
-          <a href="https://aredutech.com/" style="text-decoration: none;">
-          </a>
-        </div>
-      </a>
+    <a href="" class="logo">
+      <img src="logo1.png" alt="KO-Digital Logo">
+      <div class="logo-text">
+        <div class="header-logo-name">KO-DIGITAL</div>
+        <div class="header-logo-tag">Koperasi Pendidik Digital</div>
+      </div>
     </a>
-    </div>
 
     <nav>
-      <a href="#" class="active">Main</a>
-      <a href="#produk">Produk</a>
-      <a href="#ansuran">Ansuran</a>
-      <a href="#jenama">Jenama</a>
-      <a href="#promosi">Promosi</a>
-      <a href="#dokumen">Dokumen</a>
-      <a href="#">Hubungi</a>
+      <a href="#" class="active" data-ms="Utama" data-en="Home">Utama</a>
+      <a href="#produk" data-ms="Produk" data-en="Products">Produk</a>
+      <a href="#ansuran" data-ms="Ansuran" data-en="Installment">Ansuran</a>
+      <a href="#jenama" data-ms="Jenama" data-en="Brands">Jenama</a>
+      <a href="#promosi" data-ms="Promosi" data-en="Promotions">Promosi</a>
+      <a href="#dokumen" data-ms="Dokumen" data-en="Documents">Dokumen</a>
+      <a href="#" data-ms="Hubungi" data-en="Contact">Hubungi</a>
     </nav>
 
     <div class="header-actions">
+      <button class="btn-icon" id="lang-toggle">EN</button>
+      <button class="btn-icon" id="mode-toggle">🌙</button>
       <button class="btn-icon">
         <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
       <button class="btn-icon cart-rel">
         <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        <span class="cart-count">3</span>
+        <span class="cart-count">0</span>
       </button>
-      <a href="#" class="btn-gold">Daftar Masuk</a>
+      <a href="#" class="btn-gold" data-ms="Daftar Masuk" data-en="Register">Daftar Masuk</a>
     </div>
   </div>
 </header>
@@ -1126,41 +1194,41 @@
     <div>
       <div class="hero-eyebrow">
         <span class="live-dot"></span>
-        Ansuran Terbaik Malaysia
+        <span data-ms="Ansuran Terbaik Malaysia" data-en="Best Installment in Malaysia">Ansuran Terbaik Malaysia</span>
       </div>
-      <h1>Elektronik<br><span class="gold-word">Premium,</span><br>Bayaran Mudah</h1>
-      <p class="hero-sub">Dapatkan produk elektronik pilihan dengan kemudahan bayaran ansuran sehingga 24 bulan, tiada faedah tersembunyi. Khas untuk warga pendidik Malaysia.</p>
+      <h1 data-ms="Elektronik<br><span class='gold-word'>Premium,</span><br>Bayaran Mudah" data-en="Electronics<br><span class='gold-word'>Premium,</span><br>Easy Payment">Elektronik<br><span class="gold-word">Premium,</span><br>Bayaran Mudah</h1>
+      <p class="hero-sub" data-ms="Dapatkan produk elektronik pilihan dengan kemudahan bayaran ansuran sehingga 24 bulan, tiada faedah tersembunyi. Khas untuk warga pendidik Malaysia." data-en="Get selected electronic products with easy installment payments up to 24 months, no hidden interest. Exclusively for Malaysian educators.">Dapatkan produk elektronik pilihan dengan kemudahan bayaran ansuran sehingga 24 bulan, tiada faedah tersembunyi. Khas untuk warga pendidik Malaysia.</p>
       <div class="hero-cta">
         <a href="#produk" class="btn-gold">
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-          Beli Sekarang
+          <span data-ms="Beli Sekarang" data-en="Shop Now">Beli Sekarang</span>
         </a>
         <button class="hero-ghost">
           <div class="play-circle">
             <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
           </div>
-          Tonton Video
+          <span data-ms="Tonton Video" data-en="Watch Video">Tonton Video</span>
         </button>
       </div>
       <div class="hero-stats">
         <div>
           <div class="stat-val">50K<span>+</span></div>
-          <div class="stat-lbl">Pelanggan Berdaftar</div>
+          <div class="stat-lbl" data-ms="Pelanggan Berdaftar" data-en="Registered Customers">Pelanggan Berdaftar</div>
         </div>
         <div>
           <div class="stat-val">500<span>+</span></div>
-          <div class="stat-lbl">Produk Tersedia</div>
+          <div class="stat-lbl" data-ms="Produk Tersedia" data-en="Products Available">Produk Tersedia</div>
         </div>
         <div>
           <div class="stat-val">24</div>
-          <div class="stat-lbl">Bulan Ansuran</div>
+          <div class="stat-lbl" data-ms="Bulan Ansuran" data-en="Months Installment">Bulan Ansuran</div>
         </div>
       </div>
     </div>
 
     <div>
       <div class="hero-card">
-        <div class="hero-card-badge">✦ 0% Faedah</div>
+        <div class="hero-card-badge" data-ms="✦ 0% Faedah" data-en="✦ 0% Interest">✦ 0% Faedah</div>
         <div class="card-device">
           <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="140">
             <rect x="10" y="10" width="180" height="110" rx="7" fill="#F0EDE8" stroke="#E0DDD8" stroke-width="1.5"/>
@@ -1177,17 +1245,17 @@
             <rect x="70" y="132" width="60" height="8" rx="2" fill="#DDD"/>
           </svg>
         </div>
-        <h3>TESTING</h3>
+        <h3>MacBook Air M3</h3>
         <p class="card-sub">Apple · 13-inch · 2024</p>
         <div class="card-price-row">
           <span class="card-price">RM 5,299</span>
-          <span class="card-monthly">RM 220/bulan</span>
+          <span class="card-monthly" data-ms="RM 220/bulan" data-en="RM 220/month">RM 220/bulan</span>
         </div>
         <div class="card-divider"></div>
         <div class="card-tags">
-          <span class="tag tag-gold">Ansuran 24 Bulan</span>
-          <span class="tag">Waranti Rasmi</span>
-          <span class="tag">Stok Ada</span>
+          <span class="tag tag-gold" data-ms="Ansuran 24 Bulan" data-en="24 Months Installment">Ansuran 24 Bulan</span>
+          <span class="tag" data-ms="Waranti Rasmi" data-en="Official Warranty">Waranti Rasmi</span>
+          <span class="tag" data-ms="Stok Ada" data-en="In Stock">Stok Ada</span>
         </div>
       </div>
     </div>
@@ -1203,8 +1271,8 @@
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
-          <div class="perk-title">Tanpa Faedah</div>
-          <div class="perk-sub">0% untuk semua pelan</div>
+          <div class="perk-title" data-ms="Tanpa Faedah" data-en="Zero Interest">Tanpa Faedah</div>
+          <div class="perk-sub" data-ms="0% untuk semua pelan" data-en="0% for all plans">0% untuk semua pelan</div>
         </div>
       </div>
       <div class="perk">
@@ -1212,8 +1280,8 @@
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
         <div>
-          <div class="perk-title">Sehingga 24 Bulan</div>
-          <div class="perk-sub">Bayaran fleksibel</div>
+          <div class="perk-title" data-ms="Sehingga 24 Bulan" data-en="Up to 24 Months">Sehingga 24 Bulan</div>
+          <div class="perk-sub" data-ms="Bayaran fleksibel" data-en="Flexible payment">Bayaran fleksibel</div>
         </div>
       </div>
       <div class="perk">
@@ -1221,8 +1289,8 @@
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div>
-          <div class="perk-title">Lulus Segera</div>
-          <div class="perk-sub">Keputusan dalam 5 minit</div>
+          <div class="perk-title" data-ms="Lulus Segera" data-en="Instant Approval">Lulus Segera</div>
+          <div class="perk-sub" data-ms="Keputusan dalam 5 minit" data-en="Decision in 5 minutes">Keputusan dalam 5 minit</div>
         </div>
       </div>
       <div class="perk">
@@ -1230,12 +1298,12 @@
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
         </div>
         <div>
-          <div class="perk-title">Hantar 1–3 Hari</div>
-          <div class="perk-sub">Seluruh Malaysia</div>
+          <div class="perk-title" data-ms="Hantar 1–3 Hari" data-en="Delivery 1–3 Days">Hantar 1–3 Hari</div>
+          <div class="perk-sub" data-ms="Seluruh Malaysia" data-en="Nationwide">Seluruh Malaysia</div>
         </div>
       </div>
     </div>
-    <a href="#ansuran" class="btn-gold">Kira Ansuran</a>
+    <a href="#ansuran" class="btn-gold" data-ms="Kira Ansuran" data-en="Calculate Installment">Kira Ansuran</a>
   </div>
 </div>
 
@@ -1244,41 +1312,41 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
-        <div class="section-eyebrow">Kategori</div>
-        <h2 class="section-title">Semak Ikut Jenis</h2>
+        <div class="section-eyebrow" data-ms="Kategori" data-en="Categories">Kategori</div>
+        <h2 class="section-title" data-ms="Semak Ikut Jenis" data-en="Browse by Type">Semak Ikut Jenis</h2>
       </div>
-      <a href="#" class="section-link">Semua Kategori <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#" class="section-link"><span data-ms="Semua Kategori" data-en="All Categories">Semua Kategori</span> <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
     <div class="cat-grid stagger">
       <a href="#" class="cat-card">
         <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <span class="cat-name">Laptop</span>
-        <span class="cat-count">48 produk</span>
+        <span class="cat-name" data-ms="Laptop" data-en="Laptop">Laptop</span>
+        <span class="cat-count" data-ms="48 produk" data-en="48 products">48 produk</span>
       </a>
       <a href="#" class="cat-card">
         <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-        <span class="cat-name">Telefon</span>
-        <span class="cat-count">95 produk</span>
+        <span class="cat-name" data-ms="Telefon" data-en="Phone">Telefon</span>
+        <span class="cat-count" data-ms="95 produk" data-en="95 products">95 produk</span>
       </a>
       <a href="#" class="cat-card">
         <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
-        <span class="cat-name">Monitor</span>
-        <span class="cat-count">32 produk</span>
+        <span class="cat-name" data-ms="Monitor" data-en="Monitor">Monitor</span>
+        <span class="cat-count" data-ms="32 produk" data-en="32 products">32 produk</span>
       </a>
       <a href="#" class="cat-card">
         <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="1"/><rect x="9" y="7" width="6" height="6"/></svg></div>
-        <span class="cat-name">Tablet</span>
-        <span class="cat-count">27 produk</span>
+        <span class="cat-name" data-ms="Tablet" data-en="Tablet">Tablet</span>
+        <span class="cat-count" data-ms="27 produk" data-en="27 products">27 produk</span>
       </a>
       <a href="#" class="cat-card">
         <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></div>
-        <span class="cat-name">Audio</span>
-        <span class="cat-count">61 produk</span>
+        <span class="cat-name" data-ms="Audio" data-en="Audio">Audio</span>
+        <span class="cat-count" data-ms="61 produk" data-en="61 products">61 produk</span>
       </a>
       <a href="#" class="cat-card">
         <div class="cat-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
-        <span class="cat-name">Aksesori</span>
-        <span class="cat-count">120 produk</span>
+        <span class="cat-name" data-ms="Aksesori" data-en="Accessories">Aksesori</span>
+        <span class="cat-count" data-ms="120 produk" data-en="120 products">120 produk</span>
       </a>
     </div>
   </div>
@@ -1289,16 +1357,16 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
-        <div class="section-eyebrow">Produk Pilihan</div>
-        <h2 class="section-title">Terlaris Minggu Ini</h2>
+        <div class="section-eyebrow" data-ms="Produk Pilihan" data-en="Featured Products">Produk Pilihan</div>
+        <h2 class="section-title" data-ms="Terlaris Minggu Ini" data-en="Best Sellers This Week">Terlaris Minggu Ini</h2>
       </div>
-      <a href="#" class="section-link">Lihat Semua <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#" class="section-link"><span data-ms="Lihat Semua" data-en="View All">Lihat Semua</span> <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
     </div>
     <div class="prod-grid stagger">
 
       <!-- P1 -->
       <div class="prod-card">
-        <span class="prod-badge badge-hot">🔥 Terlaris</span>
+        <span class="prod-badge badge-hot" data-ms="🔥 Terlaris" data-en="🔥 Bestseller">🔥 Terlaris</span>
         <button class="prod-wish">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </button>
@@ -1322,17 +1390,17 @@
             <span class="prod-price">RM 5,299</span>
             <span class="prod-old">RM 5,799</span>
           </div>
-          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 220/bulan</div>
+          <div class="prod-inst"><span class="inst-pill" data-ms="Ansuran" data-en="Installment">Ansuran</span> <span data-ms="serendah RM 220/bulan" data-en="as low as RM 220/month">serendah RM 220/bulan</span></div>
           <button class="btn-cart">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
-            Tambah ke Troli
+            <span data-ms="Tambah ke Troli" data-en="Add to Cart">Tambah ke Troli</span>
           </button>
         </div>
       </div>
 
       <!-- P2 -->
       <div class="prod-card">
-        <span class="prod-badge badge-new">Baru</span>
+        <span class="prod-badge badge-new" data-ms="Baru" data-en="New">Baru</span>
         <button class="prod-wish">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </button>
@@ -1351,10 +1419,10 @@
           <div class="prod-name">Samsung Galaxy S25 Ultra 5G</div>
           <div class="prod-rating"><span class="prod-stars">★★★★★</span><span class="prod-rcount">(312)</span></div>
           <div class="prod-price-row"><span class="prod-price">RM 4,799</span></div>
-          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 200/bulan</div>
+          <div class="prod-inst"><span class="inst-pill" data-ms="Ansuran" data-en="Installment">Ansuran</span> <span data-ms="serendah RM 200/bulan" data-en="as low as RM 200/month">serendah RM 200/bulan</span></div>
           <button class="btn-cart">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
-            Tambah ke Troli
+            <span data-ms="Tambah ke Troli" data-en="Add to Cart">Tambah ke Troli</span>
           </button>
         </div>
       </div>
@@ -1385,10 +1453,10 @@
             <span class="prod-old">RM 2,999</span>
             <span class="prod-save">−RM450</span>
           </div>
-          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 106/bulan</div>
+          <div class="prod-inst"><span class="inst-pill" data-ms="Ansuran" data-en="Installment">Ansuran</span> <span data-ms="serendah RM 106/bulan" data-en="as low as RM 106/month">serendah RM 106/bulan</span></div>
           <button class="btn-cart">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
-            Tambah ke Troli
+            <span data-ms="Tambah ke Troli" data-en="Add to Cart">Tambah ke Troli</span>
           </button>
         </div>
       </div>
@@ -1412,10 +1480,10 @@
           <div class="prod-name">Lenovo Tab P12 Pro 5G Tablet</div>
           <div class="prod-rating"><span class="prod-stars">★★★★★</span><span class="prod-rcount">(156)</span></div>
           <div class="prod-price-row"><span class="prod-price">RM 2,199</span></div>
-          <div class="prod-inst"><span class="inst-pill">Ansuran</span> serendah RM 92/bulan</div>
+          <div class="prod-inst"><span class="inst-pill" data-ms="Ansuran" data-en="Installment">Ansuran</span> <span data-ms="serendah RM 92/bulan" data-en="as low as RM 92/month">serendah RM 92/bulan</span></div>
           <button class="btn-cart">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4"/><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
-            Tambah ke Troli
+            <span data-ms="Tambah ke Troli" data-en="Add to Cart">Tambah ke Troli</span>
           </button>
         </div>
       </div>
@@ -1442,27 +1510,27 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
-        <div class="section-eyebrow">Tawaran Istimewa</div>
-        <h2 class="section-title">Promosi Bulan Ini</h2>
+        <div class="section-eyebrow" data-ms="Tawaran Istimewa" data-en="Special Offers">Tawaran Istimewa</div>
+        <h2 class="section-title" data-ms="Promosi Bulan Ini" data-en="This Month's Promotions">Promosi Bulan Ini</h2>
       </div>
     </div>
     <div class="promo-grid stagger">
       <div class="promo-card dark">
         <div class="promo-bg-text">💻</div>
         <div>
-          <span class="promo-tag">Had Masa</span>
-          <h3>Laptop Education Bundle</h3>
-          <p>Laptop + Bag + Mouse percuma untuk semua guru berdaftar</p>
-          <a href="#" class="btn-gold" style="align-self:flex-start;">Tuntut Sekarang</a>
+          <span class="promo-tag" data-ms="Had Masa" data-en="Limited Time">Had Masa</span>
+          <h3 data-ms="Laptop Education Bundle" data-en="Laptop Education Bundle">Laptop Education Bundle</h3>
+          <p data-ms="Laptop + Bag + Mouse percuma untuk semua guru berdaftar" data-en="Laptop + Bag + Mouse free for all registered teachers">Laptop + Bag + Mouse percuma untuk semua guru berdaftar</p>
+          <a href="#" class="btn-gold" style="align-self:flex-start;" data-ms="Tuntut Sekarang" data-en="Claim Now">Tuntut Sekarang</a>
         </div>
       </div>
       <div class="promo-card bright">
         <div class="promo-bg-text">📱</div>
         <div>
-          <span class="promo-tag">Eksklusif Ahli</span>
-          <h3>Telefon Trade-In Bonus</h3>
-          <p>Tukar telefon lama, dapat kredit sehingga RM 500</p>
-          <a href="#" class="btn-outline-dark">Ketahui Lebih</a>
+          <span class="promo-tag" data-ms="Eksklusif Ahli" data-en="Member Exclusive">Eksklusif Ahli</span>
+          <h3 data-ms="Telefon Trade-In Bonus" data-en="Phone Trade-In Bonus">Telefon Trade-In Bonus</h3>
+          <p data-ms="Tukar telefon lama, dapat kredit sehingga RM 500" data-en="Trade in old phone, get credit up to RM 500">Tukar telefon lama, dapat kredit sehingga RM 500</p>
+          <a href="#" class="btn-outline-dark" data-ms="Ketahui Lebih" data-en="Learn More">Ketahui Lebih</a>
         </div>
       </div>
     </div>
@@ -1473,48 +1541,48 @@
 <section id="ansuran" class="inst-section bg-subtle">
   <div class="inst-inner section-inner">
     <div class="reveal">
-      <div class="section-eyebrow">Kemudahan Bayaran</div>
-      <h2 class="section-title">Ansuran Mudah,<br>Tiada Beban</h2>
-      <p class="inst-desc">Kami menawarkan pelan ansuran yang fleksibel dengan kadar faedah 0% untuk memudahkan anda memiliki produk elektronik impian tanpa tekanan kewangan.</p>
+      <div class="section-eyebrow" data-ms="Kemudahan Bayaran" data-en="Payment Facility">Kemudahan Bayaran</div>
+      <h2 class="section-title" data-ms="Ansuran Mudah,<br>Tiada Beban" data-en="Easy Installment,<br>No Burden">Ansuran Mudah,<br>Tiada Beban</h2>
+      <p class="inst-desc" data-ms="Kami menawarkan pelan ansuran yang fleksibel dengan kadar faedah 0% untuk memudahkan anda memiliki produk elektronik impian tanpa tekanan kewangan." data-en="We offer flexible installment plans with 0% interest rate to make it easy for you to own your dream electronics without financial pressure.">Kami menawarkan pelan ansuran yang fleksibel dengan kadar faedah 0% untuk memudahkan anda memiliki produk elektronik impian tanpa tekanan kewangan.</p>
       <div class="plans-grid stagger">
         <div class="plan-card">
           <div class="plan-num">6</div>
-          <div class="plan-unit">Bulan</div>
-          <div class="plan-rate"><strong>0%</strong> faedah</div>
+          <div class="plan-unit" data-ms="Bulan" data-en="Months">Bulan</div>
+          <div class="plan-rate"><strong>0%</strong> <span data-ms="faedah" data-en="interest">faedah</span></div>
         </div>
         <div class="plan-card featured">
           <div class="plan-num">12</div>
-          <div class="plan-unit">Bulan</div>
-          <div class="plan-rate"><strong>0%</strong> faedah</div>
+          <div class="plan-unit" data-ms="Bulan" data-en="Months">Bulan</div>
+          <div class="plan-rate"><strong>0%</strong> <span data-ms="faedah" data-en="interest">faedah</span></div>
         </div>
         <div class="plan-card">
           <div class="plan-num">24</div>
-          <div class="plan-unit">Bulan</div>
-          <div class="plan-rate"><strong>0%</strong> faedah</div>
+          <div class="plan-unit" data-ms="Bulan" data-en="Months">Bulan</div>
+          <div class="plan-rate"><strong>0%</strong> <span data-ms="faedah" data-en="interest">faedah</span></div>
         </div>
       </div>
     </div>
     <div class="calculator reveal">
       <div class="calc-title">
         <div class="calc-icon">📊</div>
-        Kira Ansuran Anda
+        <span data-ms="Kira Ansuran Anda" data-en="Calculate Your Installment">Kira Ansuran Anda</span>
       </div>
       <div class="calc-field">
-        <label class="calc-label">Harga Produk (RM)</label>
+        <label class="calc-label" data-ms="Harga Produk (RM)" data-en="Product Price (RM)">Harga Produk (RM)</label>
         <input type="number" id="calcPrice" placeholder="cth: 3500" oninput="calcInst()">
       </div>
       <div class="calc-field">
-        <label class="calc-label">Tempoh Ansuran</label>
+        <label class="calc-label" data-ms="Tempoh Ansuran" data-en="Installment Period">Tempoh Ansuran</label>
         <select id="calcMonths" onchange="calcInst()">
-          <option value="6">6 Bulan</option>
-          <option value="12" selected>12 Bulan</option>
-          <option value="24">24 Bulan</option>
+          <option value="6" data-ms="6 Bulan" data-en="6 Months">6 Bulan</option>
+          <option value="12" selected data-ms="12 Bulan" data-en="12 Months">12 Bulan</option>
+          <option value="24" data-ms="24 Bulan" data-en="24 Months">24 Bulan</option>
         </select>
       </div>
       <div class="calc-result">
         <div>
-          <div class="calc-rlabel">Bayaran Bulanan</div>
-          <div class="calc-rsub">0% faedah dikenakan</div>
+          <div class="calc-rlabel" data-ms="Bayaran Bulanan" data-en="Monthly Payment">Bayaran Bulanan</div>
+          <div class="calc-rsub" data-ms="0% faedah dikenakan" data-en="0% interest charged">0% faedah dikenakan</div>
         </div>
         <div class="calc-ramount" id="calcResult">RM 0</div>
       </div>
@@ -1527,8 +1595,8 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
-        <div class="section-eyebrow">Kepercayaan Anda</div>
-        <h2 class="section-title">Mengapa KO-Digital?</h2>
+        <div class="section-eyebrow" data-ms="Kepercayaan Anda" data-en="Your Trust">Kepercayaan Anda</div>
+        <h2 class="section-title" data-ms="Mengapa KO-Digital?" data-en="Why KO-Digital?">Mengapa KO-Digital?</h2>
       </div>
     </div>
     <div class="trust-grid stagger">
@@ -1537,8 +1605,8 @@
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
-          <div class="trust-t">Produk 100% Original</div>
-          <div class="trust-d">Semua produk adalah original berwaranti rasmi pengeluar.</div>
+          <div class="trust-t" data-ms="Produk 100% Original" data-en="100% Original Products">Produk 100% Original</div>
+          <div class="trust-d" data-ms="Semua produk adalah original berwaranti rasmi pengeluar." data-en="All products are original with official manufacturer warranty.">Semua produk adalah original berwaranti rasmi pengeluar.</div>
         </div>
       </div>
       <div class="trust-card">
@@ -1546,8 +1614,8 @@
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
         </div>
         <div>
-          <div class="trust-t">Penghantaran Pantas</div>
-          <div class="trust-d">Terima dalam 1-3 hari bekerja ke seluruh Malaysia.</div>
+          <div class="trust-t" data-ms="Penghantaran Pantas" data-en="Fast Delivery">Penghantaran Pantas</div>
+          <div class="trust-d" data-ms="Terima dalam 1-3 hari bekerja ke seluruh Malaysia." data-en="Receive in 1-3 working days nationwide.">Terima dalam 1-3 hari bekerja ke seluruh Malaysia.</div>
         </div>
       </div>
       <div class="trust-card">
@@ -1555,8 +1623,8 @@
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         </div>
         <div>
-          <div class="trust-t">Sokongan 24/7</div>
-          <div class="trust-d">Pasukan kami sedia membantu anda bila-bila masa.</div>
+          <div class="trust-t" data-ms="Sokongan 24/7" data-en="24/7 Support">Sokongan 24/7</div>
+          <div class="trust-d" data-ms="Pasukan kami sedia membantu anda bila-bila masa." data-en="Our team is ready to help you anytime.">Pasukan kami sedia membantu anda bila-bila masa.</div>
         </div>
       </div>
       <div class="trust-card">
@@ -1564,8 +1632,8 @@
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
         </div>
         <div>
-          <div class="trust-t">Berdaftar & Dikawal Selia</div>
-          <div class="trust-d">Koperasi berdaftar di bawah Suruhanjaya Koperasi Malaysia.</div>
+          <div class="trust-t" data-ms="Berdaftar & Dikawal Selia" data-en="Registered & Regulated">Berdaftar & Dikawal Selia</div>
+          <div class="trust-d" data-ms="Koperasi berdaftar di bawah Suruhanjaya Koperasi Malaysia." data-en="Cooperative registered under Malaysian Cooperative Commission.">Koperasi berdaftar di bawah Suruhanjaya Koperasi Malaysia.</div>
         </div>
       </div>
     </div>
@@ -1577,53 +1645,53 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <div>
-        <div class="section-eyebrow">Sumber Maklumat</div>
-        <h2 class="section-title">Panduan & Dokumen</h2>
+        <div class="section-eyebrow" data-ms="Sumber Maklumat" data-en="Information Resources">Sumber Maklumat</div>
+        <h2 class="section-title" data-ms="Panduan & Dokumen" data-en="Guides & Documents">Panduan & Dokumen</h2>
       </div>
-      <p style="font-size: 14px; color: var(--ink-light); text-align: right;">Muat turun panduan, terma dan syarat, serta dokumen penting lainnya</p>
+      <p style="font-size: 14px; color: var(--ink-light); text-align: right;" data-ms="Muat turun panduan, terma dan syarat, serta dokumen penting lainnya" data-en="Download guides, terms and conditions, and other important documents">Muat turun panduan, terma dan syarat, serta dokumen penting lainnya</p>
     </div>
     <div class="pdf-grid stagger">
       <a href="#" class="pdf-card" onclick="downloadPDF(event, 'Panduan_Pendaftaran.pdf')">
         <div class="pdf-icon">📋</div>
-        <div class="pdf-title">Panduan Pendaftaran</div>
-        <div class="pdf-desc">Langkah demi langkah cara mendaftar dan membuat akaun</div>
+        <div class="pdf-title" data-ms="Panduan Pendaftaran" data-en="Registration Guide">Panduan Pendaftaran</div>
+        <div class="pdf-desc" data-ms="Langkah demi langkah cara mendaftar dan membuat akaun" data-en="Step by step how to register and create account">Langkah demi langkah cara mendaftar dan membuat akaun</div>
         <span class="pdf-size">2.4 MB</span>
         <div class="pdf-download">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Muat Turun
+          <span data-ms="Muat Turun" data-en="Download">Muat Turun</span>
         </div>
       </a>
 
       <a href="#" class="pdf-card" onclick="downloadPDF(event, 'Syarat_Ansuran.pdf')">
         <div class="pdf-icon">📑</div>
-        <div class="pdf-title">Syarat & Ansuran</div>
-        <div class="pdf-desc">Terma pembayaran, kadar faedah, dan syarat kelayakan</div>
+        <div class="pdf-title" data-ms="Syarat & Ansuran" data-en="Terms & Installment">Syarat & Ansuran</div>
+        <div class="pdf-desc" data-ms="Terma pembayaran, kadar faedah, dan syarat kelayakan" data-en="Payment terms, interest rates, and eligibility conditions">Terma pembayaran, kadar faedah, dan syarat kelayakan</div>
         <span class="pdf-size">1.8 MB</span>
         <div class="pdf-download">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Muat Turun
+          <span data-ms="Muat Turun" data-en="Download">Muat Turun</span>
         </div>
       </a>
 
       <a href="#" class="pdf-card" onclick="downloadPDF(event, 'Privasi_Keselamatan.pdf')">
         <div class="pdf-icon">🔒</div>
-        <div class="pdf-title">Privasi & Keselamatan</div>
-        <div class="pdf-desc">Dasar privasi dan perlindungan data peribadi anda</div>
+        <div class="pdf-title" data-ms="Privasi & Keselamatan" data-en="Privacy & Security">Privasi & Keselamatan</div>
+        <div class="pdf-desc" data-ms="Dasar privasi dan perlindungan data peribadi anda" data-en="Privacy policy and protection of your personal data">Dasar privasi dan perlindungan data peribadi anda</div>
         <span class="pdf-size">1.2 MB</span>
         <div class="pdf-download">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Muat Turun
+          <span data-ms="Muat Turun" data-en="Download">Muat Turun</span>
         </div>
       </a>
 
       <a href="#" class="pdf-card" onclick="downloadPDF(event, 'FAQ_Koperasi.pdf')">
         <div class="pdf-icon">❓</div>
-        <div class="pdf-title">Soalan Lazim (FAQ)</div>
-        <div class="pdf-desc">Jawapan kepada soalan yang sering ditanya</div>
+        <div class="pdf-title" data-ms="Soalan Lazim (FAQ)" data-en="Frequently Asked Questions (FAQ)">Soalan Lazim (FAQ)</div>
+        <div class="pdf-desc" data-ms="Jawapan kepada soalan yang sering ditanya" data-en="Answers to frequently asked questions">Jawapan kepada soalan yang sering ditanya</div>
         <span class="pdf-size">0.9 MB</span>
         <div class="pdf-download">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Muat Turun
+          <span data-ms="Muat Turun" data-en="Download">Muat Turun</span>
         </div>
       </a>
     </div>
@@ -1636,19 +1704,12 @@
     <div class="footer-top">
       <div>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:0;">
-          <div class="logo-mark" style="background:var(--gold);">
-            <svg viewBox="0 0 22 22" fill="none" width="22" height="22">
-              <rect x="2" y="2" width="5" height="18" fill="#0E0E0E"/>
-              <polygon points="7,11 16,2 19,2 10,11 19,20 16,20" fill="#0E0E0E"/>
-              <path d="M13 5 C17 5 20 7.7 20 11 C20 14.3 17 17 13 17" stroke="#0E0E0E" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
-            </svg>
-          </div>
           <div>
             <div class="footer-logo-name">KO-DIGITAL</div>
             <div class="footer-logo-tag">Koperasi Pendidik Digital</div>
           </div>
         </div>
-        <p class="footer-desc">Platform e-dagang elektronik khas untuk warga pendidik Malaysia, dengan kemudahan ansuran 0% faedah sehingga 24 bulan.</p>
+        <p class="footer-desc" data-ms="Platform e-dagang elektronik khas untuk warga pendidik Malaysia, dengan kemudahan ansuran 0% faedah sehingga 24 bulan." data-en="E-commerce platform exclusively for Malaysian educators, with 0% interest installment facility up to 24 months.">Platform e-dagang elektronik khas untuk warga pendidik Malaysia, dengan kemudahan ansuran 0% faedah sehingga 24 bulan.</p>
         <div class="footer-social">
           <div class="social-btn">f</div>
           <div class="social-btn">in</div>
@@ -1657,42 +1718,42 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4>Produk</h4>
+        <h4 data-ms="Produk" data-en="Products">Produk</h4>
         <ul>
-          <li><a href="#">Laptop & Komputer</a></li>
-          <li><a href="#">Telefon Pintar</a></li>
-          <li><a href="#">Tablet</a></li>
-          <li><a href="#">Monitor & TV</a></li>
-          <li><a href="#">Audio & Aksesori</a></li>
+          <li><a href="#" data-ms="Laptop & Komputer" data-en="Laptop & Computer">Laptop & Komputer</a></li>
+          <li><a href="#" data-ms="Telefon Pintar" data-en="Smartphone">Telefon Pintar</a></li>
+          <li><a href="#" data-ms="Tablet" data-en="Tablet">Tablet</a></li>
+          <li><a href="#" data-ms="Monitor & TV" data-en="Monitor & TV">Monitor & TV</a></li>
+          <li><a href="#" data-ms="Audio & Aksesori" data-en="Audio & Accessories">Audio & Aksesori</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Ansuran</h4>
+        <h4 data-ms="Ansuran" data-en="Installment">Ansuran</h4>
         <ul>
-          <li><a href="#">Cara Mohon</a></li>
-          <li><a href="#">Syarat Kelayakan</a></li>
-          <li><a href="#">Kalkulator Ansuran</a></li>
-          <li><a href="#">Soalan Lazim</a></li>
-          <li><a href="#">Status Permohonan</a></li>
+          <li><a href="#" data-ms="Cara Mohon" data-en="How to Apply">Cara Mohon</a></li>
+          <li><a href="#" data-ms="Syarat Kelayakan" data-en="Eligibility Criteria">Syarat Kelayakan</a></li>
+          <li><a href="#" data-ms="Kalkulator Ansuran" data-en="Installment Calculator">Kalkulator Ansuran</a></li>
+          <li><a href="#" data-ms="Soalan Lazim" data-en="FAQ">Soalan Lazim</a></li>
+          <li><a href="#" data-ms="Status Permohonan" data-en="Application Status">Status Permohonan</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Syarikat</h4>
+        <h4 data-ms="Syarikat" data-en="Company">Syarikat</h4>
         <ul>
-          <li><a href="#">Tentang Kami</a></li>
-          <li><a href="#">Kerjaya</a></li>
-          <li><a href="#">Rakan Kongsi</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Hubungi Kami</a></li>
+          <li><a href="#" data-ms="Tentang Kami" data-en="About Us">Tentang Kami</a></li>
+          <li><a href="#" data-ms="Kerjaya" data-en="Career">Kerjaya</a></li>
+          <li><a href="#" data-ms="Rakan Kongsi" data-en="Partners">Rakan Kongsi</a></li>
+          <li><a href="#" data-ms="Blog" data-en="Blog">Blog</a></li>
+          <li><a href="#" data-ms="Hubungi Kami" data-en="Contact Us">Hubungi Kami</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 KO-Digital — Koperasi Pendidik Digital Malaysia Berhad (SKM 0012345-K). Hak cipta terpelihara.</p>
+      <p data-ms="© 2025 KO-Digital — Koperasi Pendidik Digital Malaysia Berhad (SKM 0012345-K). Hak cipta terpelihara." data-en="© 2025 KO-Digital — Koperasi Pendidik Digital Malaysia Berhad (SKM 0012345-K). All rights reserved.">© 2025 KO-Digital — Koperasi Pendidik Digital Malaysia Berhad (SKM 0012345-K). Hak cipta terpelihara.</p>
       <div class="footer-legal">
-        <a href="#">Dasar Privasi</a>
-        <a href="#">Terma & Syarat</a>
-        <a href="#">Pemulangan</a>
+        <a href="#" data-ms="Dasar Privasi" data-en="Privacy Policy">Dasar Privasi</a>
+        <a href="#" data-ms="Terma & Syarat" data-en="Terms & Conditions">Terma & Syarat</a>
+        <a href="#" data-ms="Pemulangan" data-en="Returns">Pemulangan</a>
       </div>
     </div>
   </div>
@@ -1712,14 +1773,10 @@
 
   function downloadPDF(event, filename) {
     event.preventDefault();
-    // Create a simple download mechanism
     const link = document.createElement('a');
     link.href = '#';
     link.download = filename;
-    // For demo purposes, show an alert. In production, replace with actual PDF file paths
     alert('Muat turun: ' + filename + '\n\nUntuk menambah PDF sebenar, sila gantikan URL dengan fail PDF sebenar dalam folder anda.');
-    // Uncomment line below to actually download if PDF files exist:
-    // link.click();
   }
 
   function calcInst() {
@@ -1760,6 +1817,65 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
+
+  // ✅ FULL TRANSLATION SYSTEM - SEMUA TEXT AKAN BERTUKAR
+  const langToggle = document.getElementById('lang-toggle');
+  let isEnglish = localStorage.getItem('language') === 'en';
+  document.documentElement.lang = isEnglish ? 'en' : 'ms';
+  langToggle.textContent = isEnglish ? 'MS' : 'EN';
+  
+  updateLanguage(isEnglish);
+  
+  langToggle.addEventListener('click', () => {
+    isEnglish = !isEnglish;
+    document.documentElement.lang = isEnglish ? 'en' : 'ms';
+    langToggle.textContent = isEnglish ? 'MS' : 'EN';
+    localStorage.setItem('language', isEnglish ? 'en' : 'ms');
+    updateLanguage(isEnglish);
+  });
+
+  function updateLanguage(isEng) {
+    const lang = isEng ? 'en' : 'ms';
+    
+    // Translate semua elements dengan data-ms dan data-en
+    document.querySelectorAll('[data-ms][data-en]').forEach(el => {
+      const msText = el.getAttribute('data-ms');
+      const enText = el.getAttribute('data-en');
+      
+      // Handle HTML content (untuk tags dengan <strong>, <span>, dll)
+      if (msText.includes('<') || enText.includes('<')) {
+        el.innerHTML = isEng ? enText : msText;
+      } else {
+        el.textContent = isEng ? enText : msText;
+      }
+    });
+
+    // Update hero h1 dengan gold-word class
+    const heroH1 = document.querySelector('.hero h1');
+    if (heroH1) {
+      heroH1.innerHTML = isEng 
+        ? 'Electronics<br><span class="gold-word">Premium,</span><br>Easy Payment'
+        : 'Elektronik<br><span class="gold-word">Premium,</span><br>Bayaran Mudah';
+    }
+
+    // Update select options
+    document.querySelectorAll('select option[data-ms][data-en]').forEach(option => {
+      option.textContent = isEng ? option.getAttribute('data-en') : option.getAttribute('data-ms');
+    });
+  }
+
+  // ✅ DARK MODE - EXCLUDE FOOTER
+  const modeToggle = document.getElementById('mode-toggle');
+  let isDark = localStorage.getItem('theme') === 'dark';
+  document.body.classList.toggle('dark-mode', isDark);
+  modeToggle.textContent = isDark ? '☀️' : '🌙';
+  
+  modeToggle.addEventListener('click', () => {
+    isDark = !isDark;
+    document.body.classList.toggle('dark-mode');
+    modeToggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
 </script>
 </body>
 </html>
